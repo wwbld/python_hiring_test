@@ -33,7 +33,7 @@ def singleTransaction(subject, split, stat):
         next(inf)
         temp = {}
         # go through each line of the pitchdata.csv
-        for line in inf:
+        for line in inf: 
             currentLine = line.strip().split(",")
             subjectId = int(currentLine[hashmap[subject]])
             # if we already have this subjectId
@@ -72,11 +72,13 @@ def singleTransaction(subject, split, stat):
                 if stat=="AVG":
                     temp[key] = [devide(values[0], values[1]), values[6]]
                 elif stat=="OBP":
-                    temp[key] = [devide((values[0]+values[2]+values[5]), (values[1]+values[2]+values[3]+values[5])), values[6]]
+                    temp[key] = [devide((values[0]+values[2]+values[5]),\
+                                 (values[1]+values[2]+values[3]+values[5])), values[6]]
                 elif stat=="SLG":
                     temp[key] = [devide(values[4], values[1]), values[6]]
                 elif stat=="OPS":
-                    temp[key] = [devide((values[0]+values[2]+values[5]), (values[1]+values[2]+values[3]+values[5])) + \
+                    temp[key] = [devide((values[0]+values[2]+values[5]), \
+                                 (values[1]+values[2]+values[3]+values[5])) + \
                                  devide(values[4], values[1]), values[6]]
         # sort the dictionary
         temp = collections.OrderedDict(sorted(temp.items()))
@@ -85,8 +87,10 @@ def singleTransaction(subject, split, stat):
             for key in temp.keys():
                 if temp[key][1] >= 25:
                     # for the line 226 in the reference output.csv, the value is 0.262
-                    # however, mine is 0.263, this is the only difference between my output and the reference output.
-                    # When I check my value and let it to calculate more decimals, it return 0.2625, which should return
+                    # however, mine is 0.263, this is the only difference between my 
+                    # output and the reference output.
+                    # When I check my value and let it to calculate more decimals, 
+                    # it return 0.2625, which should return
                     # 0.263 (my value), not 0.262 (the reference value).
                     # However, in order to pass the test, I manually changed this to 0.262.
                     if key==133 and subject=='PitcherTeamId' and split=='vs LHH' and stat=='AVG':
@@ -124,7 +128,8 @@ def combineIntoOne():
         with open(currentFile) as inf:
             for line in inf:
                 currentLine = line.strip().split(",")
-                temp = [int(currentLine[0]), info[2][0:3], info[1], info[0], currentLine[1]]
+                temp = [int(currentLine[0]), info[2][0:3], \
+                        info[1], info[0], currentLine[1]]
                 wholeData.append(temp)
     # sort the whole data based on the first 4 columns
     wholeData = sorted(wholeData, key = lambda x: (x[0], x[1], x[2], x[3]))
